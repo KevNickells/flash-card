@@ -1,29 +1,28 @@
+"""
+  Opens terms.json; picks a term; displays term - definition using notify-send
+  CRON calls this once per minute - see `crontab -l`
+"""
+
 from json import load
 from random import randrange
-from logging import warning
 from subprocess import Popen, PIPE
 from shlex import split
 from time import sleep
 
-def send_message(message):
-  try:
-    command = split(f"""
-      notify-send "{message}\n\n\n\n"
-        --icon /home/kev/flash-card/poland.jpg
-        --expire-time=5000
-      """)
+def send_message(message) -> None:
+  command: list[str] = split(f"""
+    notify-send "{message}\n\n"
+      --icon /home/kev/flash-card/poland.jpg
+      --expire-time=5000
+    """)
 
-    response = Popen(command, stdout=PIPE, stderr=PIPE)
-    response_code = response.wait()
-    out, error = response.communicate()
+  with Popen(command, stdout=PIPE, stderr=PIPE):
+    pass
 
-  except Exception as ex:
-    warning('fuckry here')
-    warning(ex)
 
-with open('/home/kev/flash-card/terms.json') as f:
+with open('/home/kev/flash-card/terms.json', 'r') as f:
   terms = load(f)
-  random_number = randrange(len(terms))
+  random_number : int = randrange(len(terms))
   term = list(terms.keys())[random_number]
   response = terms[term]
 
