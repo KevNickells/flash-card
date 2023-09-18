@@ -20,14 +20,22 @@ def send_message(message) -> None:
     pass
 
 
-with open('/home/kev/flash-card/terms.json', 'r') as f:
+with open('/home/kev/flash-card/terms.json', encoding='utf8') as f:
   terms = load(f)
+
   random_number : int = randrange(len(terms))
-  term = list(terms.keys())[random_number]
-  response = terms[term]
 
-  send_message(term)
-  sleep(5)
-  send_message(response)
+  term : str = list(terms.keys())[random_number]
+  response : str = terms[term]
 
+  heads_or_tails : int = randrange(2)
+
+  if heads_or_tails == 1:
+    send_message(term)
+    sleep(5)
+    send_message(response)
+  else:
+    send_message(response)
+    sleep(5)
+    send_message(term)
 
