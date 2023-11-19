@@ -28,14 +28,18 @@ with open('/home/kev/flash-card/terms.json', encoding='utf8') as f:
   term : str = list(terms.keys())[random_number]
   response : str = terms[term]
 
-  heads_or_tails : int = randrange(2)
+  send_message(term)
+  sleep(10)
+  send_message(response)
 
-  if heads_or_tails == 1:
-    send_message(term)
-    sleep(5)
-    send_message(response)
-  else:
-    send_message(response)
-    sleep(5)
-    send_message(term)
+  # heads_or_tails : int = randrange(2)
+
+  # if heads_or_tails == 1:
+  #   send_message(term)
+  #   sleep(5)
+  #   send_message(response)
+  # else:
+  #   send_message(response)
+  #   sleep(5)
+  #   send_message(term)
 
